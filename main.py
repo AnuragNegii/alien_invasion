@@ -1,6 +1,7 @@
 import sys
 import pygame
 # from character import Character
+from alien import Alien
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
@@ -19,7 +20,30 @@ class AlienInvasion:
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
+        self.aliens = pygame.sprite.Group()
+        self._create_fleet()
         # self.character = Character(self)
+
+    def _create_alien(self, current_x, current_y):
+        new_alien = Alien(self)
+        new_alien.x = current_x
+        new_alien.rect.x = current_x
+        new_alien.rect.y = current_y
+        self.aliens.add(new_alien)
+
+    def _create_fleet(self):
+        alien = Alien(self)
+        alien_width = alien.rect.width
+        alien_height = alien.rect.height
+
+        current_x, current_y = alien_width, alien_height
+        while current_y < ((self.settings.screen_height/2) - 3 * alien_height):
+            while (current_x < (self.settings.screen_width - 2 * alien_width)):
+                self._create_alien(current_x, current_y)
+                current_x += 2 * alien_width
+            current_x = alien_width
+            current_y += 2 * alien_height
+
 
     def _fire_bullet(self):
         if len(self.bullets) < self.settings.bullets_allowed:
@@ -56,6 +80,7 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.ship.blitme()
+        self.aliens.draw(self.screen)
         # self.character.blitme()
         pygame.display.flip()
 
