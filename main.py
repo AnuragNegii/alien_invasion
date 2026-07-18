@@ -92,13 +92,30 @@ class AlienInvasion:
                 self.bullets.remove(bullet)
         print(len(self.bullets))
 
+    def _update_aliens(self):
+        self._check_fleet_edges()
+        self.aliens.update()
+
     def run_game(self):
         while True:
             self._check_events()
             self.ship.update()
             self._update_bullets()
             self._update_screen()
+            self._update_aliens()
             self.clock.tick(self.settings.frame_rate)
+
+    def _check_fleet_edges(self):
+        for alien in self.aliens.sprites():
+            if alien.check_edges():
+                self._change_fleet_direction()
+                break
+
+    def _change_fleet_direction(self):
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.fleet_drop_speed
+        self.settings.alien_ship_speed *= -1
+
 
 
 if __name__ == "__main__":
