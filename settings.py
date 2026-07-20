@@ -8,15 +8,16 @@ class Settings:
 
         #ship settings
         self.ship_speed = 5.5
+        self.ships_limit = 3
 
         #bullet settings
-        self.bullet_speed = 2.0
-        self.bullet_width = 3
-        self.bullet_height = 15
+        self.bullet_speed = 4.0
+        self.bullet_width = 300
+        self.bullet_height = 1500
         self.bullet_color = (60, 60, 60)
-        self.bullets_allowed = 3
+        self.bullets_allowed = 300
 
         #alien ship(enemies)
-        self.alien_ship_speed = 1.0
-        self.fleet_drop_speed = 10
+        self.alien_ship_speed = 10.0
+        self.fleet_drop_speed = 50
         self.fleet_direction  = 1
